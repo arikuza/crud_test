@@ -1,8 +1,39 @@
 .container {
   display: flex;
+  margin: 0 auto;
+  margin-top: 5px;
+}
+
+.container > .info:nth-child(odd) {
+  background-color: rgba(0,0,0,0.02);
 }
 
 .info {
-  padding: 20px;
-  width: 100px;
+  width: 120px;
+  padding: 5px;
+  text-align: center;
+  font-size: 12px;
+  overflow-x: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.name {
+  min-width: 140px;
+}
+
+.button {
+  background-color: darkgray;
+  border: none;
+  color: white;
+  cursor: pointer;
+  align-self: center;
+  border-radius: 2px;
+  padding: 2px 8px;
+}
+
+.warning {
+  background-color: red;
+  margin: 0px 20px;
 }

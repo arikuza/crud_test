@@ -1,0 +1,27 @@
+.container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 10px 0;
+}
+
+.label {
+  width: 100px;
+  font-size: 14px;
+  text-align: right;
+}
+
+.wrap {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+  margin-left: 20px;
+}
+
+.container select {
+  flex-grow: 1;
+  margin-top: 10px;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  height: 30px;
+  font-size: 16px;
+}

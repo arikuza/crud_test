@@ -2,13 +2,35 @@
   display: flex;
   flex-direction: column;
   align-items: center;
+  margin-top: 50px;
+  margin-left: 50px;
+  margin-right: 20px;
+  background-color: rgba(0, 0, 0, 0.01);
+  padding: 40px;
+  border-radius: 40px;
+}
+
+.container form {
+  display: flex;
+  flex-direction: column;
 }
 
 .fieldWrap {
   display: flex;
-  padding: 20px;
+  padding: 10px;
 }
 
 .fieldWrap label {
   margin-right: 20px;
+}
+
+.addUser {
+  width: 150px;
+  height: 40px;
+  background-color: rgb(107, 177, 107);
+  border: none;
+  border-radius: 2px;
+  color: white;
+  margin: 10px 0;
+  margin-left: auto;
 }

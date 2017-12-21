@@ -1,0 +1,26 @@
+.container {
+  width: 850px;
+  margin: 0px auto;
+  margin-top: 40px;
+}
+
+.title {
+  text-align: center;
+}
+
+.header {
+  margin: 0 auto;
+  font-size: 14px;
+  color: rgba(0, 0, 0, 0.6);
+}
+
+.name {
+  min-width: 140px;
+}
+
+.info {
+  width: 120px;
+  padding: 5px;
+  display: inline-block;
+  text-align: center;
+}

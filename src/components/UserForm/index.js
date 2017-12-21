@@ -1,11 +1,20 @@
 import React, { Component } from 'react';
-import { reduxForm, Field } from 'redux-form';
+import { reduxForm } from 'redux-form';
 import InputField from './components/InputField';
+import { connect } from 'react-redux';
+import SelectDate from './components/SelectDate';
 import styles from './UserForm.css';
 
-const months = Array(12).fill(0).map((e,i)=>i+1);
-const days = Array(31).fill(0).map((e,i)=>i+1);
-const years = Array(150).fill(0).map((e,i)=>i+1950);
+const required = value => (value ? undefined : 'This field is required');
+
+const maxLength = max => value => value && value.length > max ? `Must be ${max} characters or less` : undefined;
+
+const maxLength100 = maxLength(100);
+
+const phoneNumber = value =>
+  value && !/^(\s*)?(\+)?([- _():=+]?\d[- _():=+]?){10,14}(\s*)?$/.test(value) //eslint-disable-line
+    ? 'Invalid phone number'
+    : undefined;
 
 class UserForm extends Component {
 
@@ -14,48 +23,55 @@ class UserForm extends Component {
     this.props.reset();
   }
 
+  saveUser = (user) => {
+    this.props.saveUser(user);
+    this.props.clearUser();
+    this.props.reset();
+  }
+
   render() {
+
+    const isEdit = this.props.initialValues.id;
+    const onSubmit = isEdit ? this.saveUser : this.addUser; 
+
     return (
       <div className={styles.container}>
         <form
-        onSubmit={this.props.handleSubmit(this.addUser)}
+        onSubmit={this.props.handleSubmit(onSubmit)}
         >
-          <InputField label="User Name:" name="name" />
-          <div className={styles.fieldWrap}>
-            <label>Birth date:</label>
-            <Field
-              name="birthMonth"
-              component='select'
-            >
-              <option value="">Select birth month</option>
-              {months.map(month =>
-                <option value={month} key={month}>{month}</option>)}
-            </Field>
-            <Field
-              name="birthDay"
-              component='select'
-            >
-              <option value="">Select birth day</option>
-              {days.map(month =>
-                <option value={month} key={month}>{month}</option>)}
-            </Field>
-            <Field
-              name="birthYear"
-              component='select'
-            >
-              <option value="">Select birth year</option>
-              {years.map(month =>
-                <option value={month} key={month}>{month}</option>)}
-            </Field>
-          </div>
-          <InputField label="User adress:" name="adress" />
-          <InputField label="City" name="city" />
-          <InputField label="Mobile number" name="mobile" />
-          <button type='submit'>Add User</button>
+          <InputField
+            label="Name:"
+            name="name"
+            validate={[required, maxLength100]}
+          />
+          <SelectDate
+            updateDays={this.props.updateDays}
+          />
+          <InputField
+            label="Address:"
+            name="adress"
+            validate={[required, maxLength100]}
+          />
+          <InputField
+            label="City:"
+            name="city"
+            validate={[required, maxLength100]}
+          />
+          <InputField
+            label="Mobile number:"
+            name="mobile"
+            validate={phoneNumber}
+            placeholder="8 (999) 123-45-64"
+          />
+          <button type='submit' className={styles.addUser}>{isEdit ? 'Save' : 'Add User'}</button>
         </form>
       </div>
     );
   }
 }
 
-export default reduxForm({ form: 'userForm' })(UserForm);
+export default connect(state => (
+  {
+    initialValues: state.userEdit,
+  }),
+)(reduxForm({ form: 'userForm', enableReinitialize: true })(UserForm));
